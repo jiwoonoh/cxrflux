@@ -7,18 +7,7 @@ This folder contains the final code, model weights, and results for CXRFlux,
 - `src/`: model, training, evaluation, and cohort-building code
 - `scripts/`: runnable training and evaluation scripts
 - `configs/`: study configuration files
-- `checkpoints/`: trained autoencoder and selected V2 mean-residual diffusion model
-- `results/`: final V2 panels, metrics, and train/val/test manifests
-
-## Data
-
-MIMIC-CXR JPEG data are not presented in this repository due to privacy restrictions. Download the MIMIC-CXR JPEG data and place the folder here:
-
-```bash
-data/mimic-cxr-jpg
-```
-
-Alternatively, pass a custom image path with `IMAGE_ROOT=/path/to/mimic-cxr-jpg`.
+- `results/`: final V2 panels and metrics
 
 ## Main Commands
 
