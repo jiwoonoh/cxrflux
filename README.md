@@ -1,6 +1,6 @@
 # CXRFlux
 
-This folder contains the final code, model weights, and results for CXRFlux,
+This folder contains the final code, model weights, and results for CXRFlux.
 
 ## Contents
 
