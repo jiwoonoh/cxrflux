@@ -1,0 +1,48 @@
+study_name: hf_iv_furo_dose_response_h12_48
+
+cohort:
+  name: heart_failure
+  baseline_view: frontal
+  one_interval_per_admission: true
+
+time_zero:
+  anchor: baseline_cxr
+
+treatment:
+  drug: iv_furosemide_dose
+  active_iv_loop_drugs:
+    - furosemide
+  grace_window_hours: [0, 6]
+  washout_hours: 24
+  record_dose: true
+  exclude_other_loop_diuretics_from_controls: true
+
+follow_up:
+  target_hour: 24
+  allowable_window_hours: [12, 48]
+  model_observation_process: true
+
+causal_target:
+  estimand: continuous_dose_response
+  dose_variable: 0_to_6h_iv_furosemide_mg
+  estimand_description: >
+    Conditional potential-outcome image curve E[Y(d) | X0, C, Delta t]
+    over IV furosemide dose assigned in the 0-6h grace window.
+
+propensity:
+  feature_set: strict_plus_image
+  primary_model: hurdle_expected_dose
+  clip_bounds: [0.01, 0.99]
+
+diagnostics:
+  balance_smd_threshold: 0.1
+  report_effective_sample_size: true
+  clustered_bootstrap_unit: subject_id
+
+evaluation:
+  primary_endpoint: dose_response_semantic_delta
+  secondary_endpoints:
+    - image_fidelity
+    - dose_swap_curve
+    - subgroup_heterogeneity
+    - placebo_dose_falsification

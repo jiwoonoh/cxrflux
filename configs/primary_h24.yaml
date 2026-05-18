@@ -1,0 +1,44 @@
+study_name: hf_iv_furo_target_trial_primary_h24
+
+cohort:
+  name: heart_failure
+  baseline_view: frontal
+  one_interval_per_admission: true
+
+time_zero:
+  anchor: baseline_cxr
+
+treatment:
+  drug: iv_furosemide
+  grace_window_hours: [0, 6]
+  washout_hours: 24
+  record_dose: true
+  exclude_other_loop_diuretics_from_controls: true
+
+follow_up:
+  target_hour: 24
+  allowable_window_hours: [18, 30]
+  model_observation_process: true
+
+causal_target:
+  estimand: ATT
+
+propensity:
+  feature_set: strict_plus_image
+  primary_model: logistic_regression
+  sensitivity_models:
+    - hist_gradient_boosting
+  clip_bounds: [0.01, 0.99]
+
+diagnostics:
+  balance_smd_threshold: 0.1
+  report_effective_sample_size: true
+  clustered_bootstrap_unit: subject_id
+
+evaluation:
+  primary_endpoint: clinical_delta
+  secondary_endpoints:
+    - image_fidelity
+    - deterministic_swap
+    - subgroup_heterogeneity
+    - falsification_tests
